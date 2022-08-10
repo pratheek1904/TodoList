@@ -1,25 +1,52 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState} from 'react'
+import Form  from './Form';
+import './App.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App = () => {
+  const[task,setTask] = useState(""); 
+  const[todos,setTodos] = useState([]);
+
+  const changeHandler =e =>{
+    setTask(e.target.value)
+  }
+  const submitHandler = e => {
+    e.preventDefault();
+    const newTodos = [...todos,task];
+    setTodos(newTodos);
+    if(task===''){
+      alert('Enter a todo first!')
+      return(task);
+    
+    }
+    setTask("");
+  }
+  const deleteHandler = (indexValue) => {
+    const newTodos = todos.filter((todo,index) => index !== indexValue);
+    if(deleteHandler){
+      alert('Would you like to delete?')
+      
+    }
+    setTodos(newTodos);
+
+
+  }
+  return(
+    <div>
+      <center>
+            <h2 >Todo List</h2>
+            <form onSubmit={submitHandler}>
+              <input className='input-text' 
+              type="text" placeholder='Enter the text' 
+              name= "task" value={task} onChange={changeHandler}/> &nbsp;&nbsp;
+              <input className='add' type="submit" value="+" name="Add" />
+            </form>
+            </center>
+            <Form todolist={todos} deleteHandler={deleteHandler}/>
+          
+     </div>
+
+  )
+
 }
 
-export default App;
+export default App
